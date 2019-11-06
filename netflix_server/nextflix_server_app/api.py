@@ -1,6 +1,11 @@
-from .models import NetflixModel
+from .models import NetflixModel , UserModel
 from rest_framework import viewsets
-from .serailizer import NetflixSerializer
+from .serailizer import NetflixSerializer , UserSerializer
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = UserModel.objects.all()
+    serializer_class = UserSerializer
+
 
 class NetflixViewSet(viewsets.ModelViewSet):
     """
