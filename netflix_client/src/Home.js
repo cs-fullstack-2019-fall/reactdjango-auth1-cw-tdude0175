@@ -32,8 +32,29 @@ class Home extends Component{
 
     verifyInformation = (e) => {
         e.preventDefault();
-        console.log("logging in");
-        fetch("user_authentication/")
+        let usernameToSend = e.target.username.value
+        fetch("user_authentication/",{
+            method:'post',
+            headers:{
+                'Accept': "application/json",
+                'Content-type': "application/json"
+            },
+            body : JSON.stringify({
+                username:e.target.username.value,
+                password:e.target.password.value
+            })
+        })
+            .then(data => data.text())
+            .then(info => {
+                if(info === "False")
+                {
+                    alert("Username or password Did Not Match.")
+                }
+                else
+                    {
+                        this.props.logPersonIn(usernameToSend,info)
+                    }
+            })
     }
 
     render() {
@@ -47,8 +68,8 @@ class Home extends Component{
             return (<div>
                 <h1>Please Log In</h1>
                 <form onSubmit={this.verifyInformation}>
-                    <p><input type="text" placeholder={"Username"}/></p>
-                    <p><input type="password" placeholder={"Password"}/></p>
+                    <p><input id={"username"} type="text" placeholder={"Username"}/></p>
+                    <p><input id={"password"} type="password" placeholder={"Password"}/></p>
                     <button>Submit</button>
                 </form>
             </div>)

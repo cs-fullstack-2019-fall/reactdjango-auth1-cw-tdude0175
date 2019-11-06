@@ -29,6 +29,11 @@ class Netflix extends Component {
         this.setState({user:{isLoggedIn: true,userId:fedUserId,username:fedUsername}})
     }
 
+    logPersonOut = () =>
+    {
+        this.setState({user:{isLoggedIn:false,userId:0,username:""}})
+    }
+
     render() {
         if (this.state.user.isLoggedIn === true) {
             return (<Router>
@@ -36,7 +41,7 @@ class Netflix extends Component {
                 <Link className="router-link" to="/">All Movies</Link>
                 <Link className="router-link" to="/myList">My List</Link>
                 <Link className="router-link" to="/add">Add a Favorite</Link>
-                <Link className="router-link" to="/">Log Out</Link>
+                <Link onClick={this.logPersonOut} className="router-link" to="/">Log Out</Link>
 
                 <Switch>
                     <Route path="/myList">
@@ -51,7 +56,7 @@ class Netflix extends Component {
 
                     </Route>
                     <Route path="/">
-                        <Home isLoggedIn={this.state.user.isLoggedIn}/>
+                        <Home logPersonIn={this.logPersonIn} isLoggedIn={this.state.user.isLoggedIn}/>
                     </Route>
 
                 </Switch>
@@ -67,7 +72,7 @@ class Netflix extends Component {
                     <Switch>
 
                         <Route exact path="/">
-                            <Home isLoggedIn={this.state.user.isLoggedIn}/>
+                            <Home logPersonIn={this.logPersonIn} isLoggedIn={this.state.user.isLoggedIn}/>
                         </Route>
 
                         <Route exact path="/newUser">
